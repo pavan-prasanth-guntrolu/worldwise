@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { createContext } from "react";
 import { useReducer } from "react";
+import { Navigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -41,7 +42,7 @@ function AuthProvider({ children }) {
 
   function login(email, password) {
     if (email === FAKE_USER.email && password === FAKE_USER.password)
-      dispatch({ type: "login", action: FAKE_USER });
+      dispatch({ type: "login", payload: FAKE_USER });
   }
 
   function logout() {
@@ -49,7 +50,7 @@ function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={(user, isAuthenticated, login, logout)}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
